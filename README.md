@@ -1,1 +1,1 @@
-This is the 5th edit from vs-code
+My repository for the 1st Python assignment
