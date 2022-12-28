@@ -1,17 +1,13 @@
-s1 = 'GCAACGCACAACGAAAACCCTTAGGGACTGGATTATTTCGTGATCGTTGTAGTTATTGGAAGTACGGGCATCAACCCAGTT'
-s2 = 'TTATCTGACAAAGAAAGCCGTCAACGGCTGGATAATTTCGCGATCGTGCTGGTTACTGGCGGTACGAGTGTTCCTTTGGGT'
-transitions, transversion = 0, 0
-cg = ['C','G']
-at = ['A', 'T']
+# Rosalind / SSEQ (Fra)
 
-for x,y in zip(s1,s2):
-    if x != y and x in cg and y in cg:
-        transitions += 1
-    elif x != y and x in at and y in at:
-        transitions += 1
-    elif x in at and y in cg:
-        transversion += 1
-    elif x in cg and y in at:
-        transversion += 1
-        
-print(transitions / transversion)
+from Bio import SeqIO
+
+with open('/Users/Shared/Rosalind/rosalind_sseq.txt', 'r') as my_file:
+    l = [x.seq for x in SeqIO.parse(my_file, 'fasta')]  
+    s1, s2, subs, start  = str(l[0]), str(l[1]), [], 0
+    star_len = len(s1)
+    for i in range(len(s2)):
+        start = s1.index(s2[i])
+        subs.append(start - len(s1) + star_len + 1)
+        s1 = s1[start+1:]
+    print(*subs)
